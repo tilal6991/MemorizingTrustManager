@@ -40,6 +40,8 @@ import android.support.v7.app.NotificationCompat;
 import android.util.SparseArray;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -88,7 +90,7 @@ public class MemorizingTrustManager implements X509TrustManager {
     static String KEYSTORE_DIR = "KeyStore";
     static String KEYSTORE_FILE = "KeyStore.bks";
     private static int decisionId = 0;
-    private static SparseArray<MTMDecision> openDecisions = new SparseArray<MTMDecision>();
+    private static final SparseArray<MTMDecision> openDecisions = new SparseArray<>();
     Context master;
     Activity foregroundAct;
     NotificationManager notificationManager;
@@ -266,8 +268,9 @@ public class MemorizingTrustManager implements X509TrustManager {
             app = ((Service) m).getApplication();
         } else if (m instanceof Activity) {
             app = ((Activity) m).getApplication();
-        } else
+        } else {
             throw new ClassCastException("MemorizingTrustManager context must be either Activity or Service!");
+        }
 
         File dir = app.getDir(KEYSTORE_DIR, Context.MODE_PRIVATE);
         keyStoreFile = new File(dir + File.separator + KEYSTORE_FILE);
@@ -411,7 +414,7 @@ public class MemorizingTrustManager implements X509TrustManager {
         }
         InputStream is = null;
         try {
-            is = new java.io.FileInputStream(keyStoreFile);
+            is = new FileInputStream(keyStoreFile);
             ks.load(is, "MTM".toCharArray());
         } catch (NoSuchAlgorithmException | CertificateException | IOException e) {
             LOGGER.log(Level.INFO, "getAppKeyStore(" + keyStoreFile + ") - exception loading file key store", e);
@@ -446,7 +449,7 @@ public class MemorizingTrustManager implements X509TrustManager {
         appTrustManager = getTrustManager(appKeyStore);
 
         // store KeyStore to file
-        java.io.FileOutputStream fos = null;
+        FileOutputStream fos = null;
         try {
             fos = new java.io.FileOutputStream(keyStoreFile);
             appKeyStore.store(fos, "MTM".toCharArray());
