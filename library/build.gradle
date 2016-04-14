@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0-alpha5'
+        classpath 'com.android.tools.build:gradle:2.1.0-beta1'
     }
 }
 
@@ -19,6 +19,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:23.2.1'
-    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
 }
