@@ -61,7 +61,7 @@
             -pre-compile
             -post-compile (This is typically used for code obfuscation.
                            Compiled code location: ${out.classes.absolute.dir}
-                           If this is not done in place, override ${out.dex.input.absolute.dir})
+                           If this is not done in place, override ${out.dex.objects.absolute.dir})
             -post-package
             -post-build
             -pre-clean
